@@ -220,7 +220,38 @@ li:hover {
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 1.5em;
+}
+
+.gallery-filters {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1em;
+
+}
+
+.filter.active {
+	background: #1D6154;
+	color: white;
+}
+
+.filter {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 1em;
+	margin-bottom: 4em;
+	padding: 10px;
+	border: 1px solid #1D6154;
+	border-radius: 20px;
+	color: #1D6154;
+	background-color: white;
+	min-width: 100px;
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
 }
 
 .gallery {
