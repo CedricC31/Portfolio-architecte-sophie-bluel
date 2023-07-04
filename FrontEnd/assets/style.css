@@ -1,6 +1,6 @@
 /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
+	v2.0 | 20110126
+	License: none (public domain)
 */
 
 html,
@@ -90,6 +90,7 @@ video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  scroll-behavior: smooth;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -178,17 +179,19 @@ h2 {
 nav ul {
 	display: flex;
 	align-items: center;
+  gap: 20px;
 	list-style-type: none;
 
 }
 
-nav li {
+header nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
-	color: #B1663C;
+header li a:hover,  
+header li a:focus {
+	font-weight: bold;
 }
 
 #introduction {
@@ -221,6 +224,11 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1.5em;
+}
+
+header li a {
+  text-decoration: none;
+  color: black;
 }
 
 .gallery-filters {
@@ -319,4 +327,67 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+/** log In **/
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 120px;
+}
+
+.login h2 {
+  margin-bottom: 20px;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+}
+
+.login label,
+.login input {
+  width: 100%;
+}
+
+.login label {
+  margin: 3em 0 0.5em 0;
+}
+
+.login input {
+  border: none;
+  height: 50px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+  font-family: inherit;
+  font-size: 1.2em;
+  text-indent: 12px;
+  padding: 0;
+}
+
+.btn-login {
+  background-color: #1D6154;
+  color: white;
+  font-family: 'Syne';
+  border: none;
+  width: 180px;
+  border-radius: 60px;
+  padding: 10px;
+  margin: 35px auto;
+  cursor: pointer;
+}
+
+.forgotten-password {
+  color: inherit;
+}
+
+.footer-login {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: inherit;
 }
