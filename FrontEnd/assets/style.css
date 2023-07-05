@@ -192,6 +192,7 @@ header nav li {
 header li a:hover,  
 header li a:focus {
 	font-weight: bold;
+  font-size: 16px;
 }
 
 #introduction {
@@ -330,6 +331,11 @@ footer nav ul {
 }
 
 /** log In **/
+
+.login-page {
+  font-weight: bold;
+  font-size: 16px;
+}
 
 .login {
   display: flex;

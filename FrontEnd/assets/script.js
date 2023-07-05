@@ -2,8 +2,8 @@
 
 // ********* CONSTANTES *********
 
-const gallery = document.querySelector('.gallery');
-const filterButtons = document.querySelectorAll('.filter');
+const galleryElt = document.querySelector('.gallery');
+const filterButtonsElt = document.querySelectorAll('.filter');
 
 // ********* FONCTIONS *********
 
@@ -14,7 +14,7 @@ function fetchWorks(category) {
   fetch('http://localhost:5678/api/works')
     .then(res => res.json())
     .then(data => {
-      gallery.innerHTML = ''; // Efface le contenu précédent de la galerie
+      galleryElt.innerHTML = ''; // Efface le contenu précédent de la galerie
 
       data.forEach(project => {
         if (category === 'all' || category === project.category.name.toLowerCase() || !category) {
@@ -28,7 +28,7 @@ function fetchWorks(category) {
 
           figure.appendChild(img);
           figure.appendChild(figcaption);
-          gallery.appendChild(figure);
+          galleryElt.appendChild(figure);
         }
       });
     })
@@ -37,9 +37,9 @@ function fetchWorks(category) {
     });
 }
 
-filterButtons.forEach(button => {
+filterButtonsElt.forEach(button => {
   button.addEventListener('click', () => {
-    filterButtons.forEach(btn => btn.classList.remove('active'));
+    filterButtonsElt.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 
     const category = button.getAttribute('data-category');
@@ -48,62 +48,33 @@ filterButtons.forEach(button => {
   });
 });
 
+/**
+ * Déconnecte l'utilisateur en supprimant le token et l'ID utilisateur du localStorage ou d'un cookie.
+ * Redirige vers la page d'accueil ou une autre page spécifiée.
+ */
+function logout() {
+  // Supprimer le token et userId du localStorage ou d'un cookie
+  localStorage.removeItem('token');
+  localStorage.removeItem('userId');
+
+  // Rediriger vers la page d'accueil ou une autre page
+  window.location.href = 'index.html';
+}
+
 // ********* MAIN *********
 
 fetchWorks();
 
+document.addEventListener('DOMContentLoaded', function() {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const logoutLi = document.getElementById('logout-li');
 
-document.getElementById('login-form').addEventListener('submit', function(event) {
-  event.preventDefault();  // Empêche l'envoi du formulaire par défaut
-
-  // Récupérer les valeurs des champs email et password
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  // Construire les données à envoyer dans la requête POST
-  const data = {
-    email: email,
-    password: password
-  };
-
-  // Envoyer la requête POST fetch
-  fetch('http://localhost:5678/api/users/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.userId && data.token) {
-        // Récupérer le token de la réponse
-        const token = data.token;
-        const userId = data.userId;
-
-        // Stocker le token et userId dans le localStorage ou dans un cookie
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', userId);
-
-        // Rediriger vers la page d'accueil
-        window.location.href = 'index.html';
-      } else {
-        // Afficher un message d'erreur de connexion
-        console.error('Échec de la connexion:', data.error);
-      }
-
-      /*if (data.success) {
-        // Rediriger vers la page d'accueil
-        window.location.href = 'http://127.0.0.1:5500/FrontEnd/index.html#portfolio';
-      } else {
-        // Afficher un message d'erreur de connexion
-        console.error('Échec de la connexion:', data.error);
-      }*/
-
-      console.log(data);  // Afficher la réponse dans la console
-      console.log(userId);
-      console.log(token);
-    })
-    .catch(error => {
-      // Gérer les erreurs de la requête
-      console.error('Une erreur s\'est produite lors de la requête:', error);
-    });
+  if (token && userId) {
+    // Utilisateur connecté, afficher "logout"
+    logoutLi.innerHTML = '<a href="#" onclick="logout()">logout</a>';
+  } else {
+    // Utilisateur non connecté, afficher "login"
+    logoutLi.innerHTML = '<a href="login.html">login</a>';
+  }
 });
