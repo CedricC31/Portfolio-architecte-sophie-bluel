@@ -4,6 +4,8 @@
 
 const galleryElt = document.querySelector('.gallery');
 const filterButtonsElt = document.querySelectorAll('.filter');
+//***** */
+const adminElements = document.querySelectorAll('.admin');
 
 // ********* FONCTIONS *********
 
@@ -31,6 +33,8 @@ function fetchWorks(category) {
           galleryElt.appendChild(figure);
         }
       });
+      //**** */
+      addClassAdmin();
     })
     .catch(error => {
       console.error('Une erreur s\'est produite lors de la récupération des projets:', error);
@@ -56,13 +60,63 @@ function logout() {
   // Supprimer le token et userId du localStorage ou d'un cookie
   localStorage.removeItem('token');
   localStorage.removeItem('userId');
+  //***** */
 
+  const galleryFilters = document.querySelector('.gallery-filters');
+
+  if (galleryFilters) {
+    // Ajouter la classe "hidden" à la div avec la classe "gallery-filters"
+    galleryFilters.classList.add('hidden');
+  }
+
+  removeClassAdmin();
   // Rediriger vers la page d'accueil ou une autre page
   window.location.href = 'index.html';
 }
 
 // ********* MAIN *********
 
+document.addEventListener('DOMContentLoaded', function() {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const logoutLi = document.getElementById('logout-li');
+
+  if (token && userId) {
+    // Utilisateur connecté, afficher "logout" et ajouter la classe "admin" aux éléments nécessaires
+    logoutLi.innerHTML = '<a href="#" onclick="logout()">logout</a>';
+    addClassAdmin();
+  } else {
+    // Utilisateur non connecté, afficher "login" et supprimer la classe "admin" des éléments
+    logoutLi.innerHTML = '<a href="login.html">login</a>';
+    removeClassAdmin();
+  }
+
+  fetchWorks();
+});
+
+function addClassAdmin() {
+  // Vérifier si l'utilisateur est connecté avant d'ajouter la classe "admin"
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  if (token && userId) {
+    adminElements.forEach(element => {
+      element.classList.remove('admin'); // Supprimer la classe "admin"
+    });
+
+    const galleryFilters = document.querySelector('.gallery-filters');
+    if (galleryFilters) {
+      // Ajouter la classe "hidden" à la div avec la classe "gallery-filters"
+      galleryFilters.classList.add('hidden');
+    }
+  }
+}
+
+function removeClassAdmin() {
+  adminElements.forEach(element => {
+    element.classList.add('admin'); // Ajouter la classe "admin"
+  });
+}
+/*
 fetchWorks();
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -77,4 +131,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Utilisateur non connecté, afficher "login"
     logoutLi.innerHTML = '<a href="login.html">login</a>';
   }
-});
+});*/

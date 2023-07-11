@@ -7,18 +7,29 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	<div class="admin publish">
+		<div class="edit-mode">
+			<i class="fa-regular fa-pen-to-square fa-lg"><span>Mode édition</span></i>
+			<button>publier les changements</button>
+		</div>
+	</div>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
 			<li id="logout-li"><a href="login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li>
+				<a href="https://www.instagram.com/" target="_blank">
+					<img class="instagram" src="./assets/icons/instagram.png" alt="Instagram">
+				</a>
+			</li>
 		</ul>
 	</nav>
 </header>
@@ -26,8 +37,14 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="Photo de l'architecte">
+			<div class="edit edit-picture admin">
+				<i class="fa-regular fa-pen-to-square fa-lg"><span>modifier</span></i>
+			</div>
 		</figure>
 		<article>
+			<div class="edit edit-description admin">
+				<i class="fa-regular fa-pen-to-square fa-lg"><span>modifier</span></i>
+			</div>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
@@ -35,7 +52,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<h2>Mes projets</h2>
+		<div class="edit edit-gallery admin">
+			<i class="fa-regular fa-pen-to-square fa-lg"><span>modifier</span></i>
+		</div>
 		<div class="gallery-filters">
 			<button class="filter active" data-category="all">Tous</button>
 			<button class="filter" data-category="objets" >Objets</button>
