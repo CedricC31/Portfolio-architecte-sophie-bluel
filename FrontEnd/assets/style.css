@@ -1,130 +1,372 @@
 /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
+	v2.0 | 20110126
+	License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  scroll-behavior: smooth;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
-ol, ul {
+
+ol,
+ul {
 	list-style: none;
 }
-blockquote, q {
+
+blockquote,
+q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
 body {
 	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
+	margin: auto;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
+
+main {
+  width: 84%;
+  margin: auto;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
-}
-section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
-h1{
+section {
+	margin: 125px 0;
+}
+
+.admin {
+  display: none !important;
+}
+
+.publish {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+}
+
+.edit-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  height: 60px;
+  background: black;
+  position: fixed;
+  z-index: 100;
+}
+
+.edit-mode i {
+  color: white;
+}
+
+.edit-mode span {
+  font-family: 'Work Sans';
+  font-size: 16px;
+  margin-left: 10px;
+
+}
+
+.edit-mode button {
+font-family: 'Work Sans';
+font-weight: bold;
+min-width: 100px;
+padding: 10px 20px;
+border: none;
+border-radius: 20px;
+color: black;
+border: 2px solid white;
+background-color: white;
+cursor: pointer;
+}
+
+.edit-mode button:hover,
+.edit-mode button:focus,
+.filter:hover,
+input[type="submit"]:hover {
+  background-color: black;
+  color: white;
+}
+
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
-h1 > span {
+h1>span {
+  display: inline-block;
+  margin-top: 7px;
 	font-family: 'Work Sans';
-	font-size:10px;
+	font-size: 10px;
 	letter-spacing: 0.1em;
-;
+  font-weight: normal;
+  text-transform: uppercase;
 }
 
-h2{
+h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
+  gap: 20px;
 	list-style-type: none;
 
 }
-nav li {
+
+header nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-li:hover {
-	color: #B1663C;
+header li a:hover,  
+header li a:focus {
+	font-weight: bold;
+  font-size: 16px;
 }
+
+.edit span {
+  font-family: 'Work Sans';
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.edit:hover {
+  cursor: pointer;
+}
+
+.edit:hover span,
+.edit:focus span {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.instagram {
+  width: 22px;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
+  position: relative;
 }
+
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
+
 #introduction img {
 	display: block;
-	margin: auto;
-	width: 80%;
+	width: 88%;
+}
+
+#introduction .edit-picture {
+  margin-top: 15px;
+}
+
+#introduction .edit-description {
+  position: absolute;
+  top: 25px;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+  max-width: 43%;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
-}
-#portfolio h2 {
-	text-align: center;
 	margin-bottom: 1em;
 }
+
+#portfolio {
+  position: relative;
+}
+
+#portfolio h2 {
+	text-align: center;
+	margin-bottom: 1.5em;
+}
+
+#portfolio .edit-gallery {
+  position: absolute;
+  top: 11px;
+  right: 28%;
+}
+
+header li a {
+  text-decoration: none;
+  color: black;
+}
+
+.gallery-filters {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 1em;
+
+}
+
+.filter.active {
+	background: #1D6154;
+	color: white;
+}
+
+.filter {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 1em;
+	margin-bottom: 4em;
+	padding: 10px;
+	border: 1px solid #1D6154;
+	border-radius: 20px;
+	color: #1D6154;
+	background-color: white;
+	min-width: 100px;
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -137,20 +379,24 @@ li:hover {
 	width: 100%;
 
 }
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+
+#contact>* {
 	text-align: center;
 
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
@@ -161,28 +407,98 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
+	margin: 2em auto;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+  cursor: pointer;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/** log In **/
+
+.login-page {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 120px;
+}
+
+.login h2 {
+  margin-bottom: 20px;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+}
+
+.login label,
+.login input {
+  width: 100%;
+}
+
+.login label {
+  margin: 3em 0 0.5em 0;
+}
+
+.login input {
+  border: none;
+  height: 50px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+  font-family: inherit;
+  font-size: 1.2em;
+  text-indent: 12px;
+  padding: 0;
+}
+
+.btn-login {
+  background-color: #1D6154;
+  color: white;
+  font-family: 'Syne';
+  border: none;
+  width: 180px;
+  border-radius: 60px;
+  padding: 10px;
+  margin: 35px auto;
+  cursor: pointer;
+}
+
+.forgotten-password {
+  color: inherit;
+}
+
+.footer-login {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: inherit;
+}
