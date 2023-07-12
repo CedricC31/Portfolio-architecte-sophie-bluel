@@ -200,7 +200,8 @@ min-width: 100px;
 padding: 10px 20px;
 border: none;
 border-radius: 20px;
-color: #1D6154;
+color: black;
+border: 2px solid white;
 background-color: white;
 cursor: pointer;
 }
@@ -209,7 +210,7 @@ cursor: pointer;
 .edit-mode button:focus,
 .filter:hover,
 input[type="submit"]:hover {
-  background-color: #0e2f28;
+  background-color: black;
   color: white;
 }
 
