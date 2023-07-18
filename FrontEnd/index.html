@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
@@ -42,9 +42,6 @@
 			</div>
 		</figure>
 		<article>
-			<div class="edit edit-description admin">
-				<i class="fa-regular fa-pen-to-square fa-lg"><span>modifier</span></i>
-			</div>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
@@ -54,7 +51,9 @@
 	<section id="portfolio">
 		<h2>Mes projets</h2>
 		<div class="edit edit-gallery admin">
-			<i class="fa-regular fa-pen-to-square fa-lg"><span>modifier</span></i>
+			<i class="fa-regular fa-pen-to-square fa-lg">
+				<a href="#modal1" class="js-modal">modifier</a>
+			</i>
 		</div>
 		<div class="gallery-filters">
 			<button class="filter active" data-category="all">Tous</button>
@@ -77,6 +76,32 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+	<div id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal" style="display:none;">
+		<div class="modal-wrapper js-modal-stop">
+			<div class="modal-navbar">
+				<button class="return"><i class="fa-solid fa-arrow-left fa-xl"></i></button>
+				<button class="js-modal-close" title="Fermer la boite modale"><i
+						class="fa-solid fa-xmark fa-xl"></i></button>
+			</div>
+			<div class="modal-editor">
+				<div class="modal-gallery">
+					<h1 id="title-modal">Galerie photo</h1>
+					<div class="gallery-pictures"></div>
+				</div>
+				<div class="modal-buttons">
+					<button class="add-picture">Ajouter une photo</button>
+					<button class="delete-gallery">Supprimer la galerie</button>
+				</div>
+				<div class="add-modal-gallery">
+					<h1 id="title-modal">Ajout photo</h1>
+					<div class="add-gallery"></div>
+				</div>
+				<div class="add-modal-button">
+					<button class="valid">Valider</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 
 <footer>
