@@ -34,7 +34,7 @@
 	</nav>
 </header>
 <main>
-	<section id="introduction">
+	<section id="introduction" aria-label="introduction de l'architecture">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="Photo de l'architecte">
 			<div class="edit edit-picture admin">
@@ -76,30 +76,30 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
-	<div id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal" style="display:none;">
+	<div id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal1 title-modal2" aria-label="contenu modal" style="display:none;">
 		<div class="modal-wrapper js-modal-stop">
-			<div class="modal-navbar">
+			<header class="modal-navbar">
 				<button class="return"><i class="fa-solid fa-arrow-left fa-xl"></i></button>
 				<button class="js-modal-close" title="Fermer la boite modale"><i
 						class="fa-solid fa-xmark fa-xl"></i></button>
-			</div>
-			<div class="modal-editor">
-				<div class="modal-gallery">
-					<h1 id="title-modal">Galerie photo</h1>
+			</header>
+			<section class="modal-editor" aria-label="corps de la modal">
+				<section class="modal-gallery">
+					<h2 id="title-modal1">Galerie photo</h2>
 					<div class="gallery-pictures"></div>
-				</div>
-				<div class="modal-buttons">
+				</section>
+				<section class="modal-button" aria-label="boutton gestion de la modal">
 					<button class="add-picture">Ajouter une photo</button>
 					<button class="delete-gallery">Supprimer la galerie</button>
-				</div>
-				<div class="add-modal-gallery">
-					<h1 id="title-modal">Ajout photo</h1>
+				</section>
+				<section class="add-modal-gallery">
+					<h2 id="title-modal2">Ajout photo</h2>
 					<div class="add-gallery"></div>
-				</div>
-				<div class="add-modal-button">
+				</section>
+				<section class="add-modal-button" aria-label="boutton d'ajout photo de la modal">
 					<button class="valid">Valider</button>
-				</div>
-			</div>
+				</section>
+			</section>
 		</div>
 	</div>
 </main>

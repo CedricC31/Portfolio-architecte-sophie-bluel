@@ -467,10 +467,12 @@ input[type="submit"] {
 }
 
 .modal-navbar {
-  display: flex;
+  /*display: flex;
   align-items: center;
-  height: 24px;
+  height: 24px;*/
+  display: unset;
   position: relative;
+  margin: 0;
 }
 
 .modal-navbar button {
@@ -488,6 +490,11 @@ input[type="submit"] {
   right: 0;
 }
 
+.modal-navbar button:nth-child(1):hover,
+.modal-navbar button:nth-child(2):hover {
+  cursor: pointer;
+}
+
 .modal-editor {
   display: flex;
   justify-content: space-between;
@@ -498,11 +505,10 @@ input[type="submit"] {
   margin: auto;
 }
 
-.modal-editor h1 {
+.modal-editor h2 {
   font-family: 'Work Sans';
   font-weight: normal;
   font-size: 26px;
-  margin-top: 14px;
   color: inherit;
 }
 
@@ -512,6 +518,7 @@ input[type="submit"] {
   align-items: center;
   gap: 2em;
   flex-grow: 1;
+  margin: 34px 0 0 0;
 }
 
 .gallery-pictures {
@@ -528,8 +535,6 @@ input[type="submit"] {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 5vw;
-  min-height: 160px;
 }
 
 .gallery-pictures figcaption {
@@ -543,10 +548,17 @@ input[type="submit"] {
   object-fit: cover;
 }
 
+.gallery-pictures figure button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .gallery-pictures figure .trash-can {
   position: absolute;
   top: 6px;
-  right: 0;
+  right: 3px;
 }
 
 .gallery-pictures figure .cross-arrow {
@@ -562,6 +574,8 @@ input[type="submit"] {
 
 .gallery-pictures figure span {
   font-size: inherit;
+  width: 2em;
+  height: 2em;
 }
 
 .gallery-pictures figure i:nth-child(1) {
@@ -572,17 +586,19 @@ input[type="submit"] {
   color: white;
 }
 
-.modal-buttons {
+.modal-button {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 23px;
   width: 100%;
   padding-top: 38px;
+  margin: 0;
   border-top: 1px solid #B3B3B3;
 }
 
-.modal-editor button {
+.modal-editor .modal-button button,
+.modal-editor .add-modal button button {
   font-family: 'Syne';
   font-size: 14px;
   border: none;

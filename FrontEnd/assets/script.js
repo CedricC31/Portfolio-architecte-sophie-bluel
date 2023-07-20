@@ -117,10 +117,7 @@ function removeClassAdmin() {
 let modal = null
 const focusableSelector = 'button, a, input, textarea'
 let focusables = []
-
 const galleryModal = document.querySelector('.modal-gallery .gallery-pictures');
-
-/******* */
 
 function fetchModalWorks() {
   fetch('http://localhost:5678/api/works')
@@ -133,12 +130,12 @@ function fetchModalWorks() {
           const figure = document.createElement('figure');
           const img = document.createElement('img');
           const figcaption = document.createElement('figcaption');
-          const link = document.createElement('a');
+          const button = document.createElement('button');
           const iconContainer = document.createElement('span');
           const squareIcon = document.createElement('i');
           const trashIcon = document.createElement('i');
 
-          const secondLink = document.createElement('a');
+          const secondButton = document.createElement('button');
           const secondIconContainer = document.createElement('span');
           const secondSquareIcon = document.createElement('i');
           const secondTrashIcon = document.createElement('i');
@@ -146,14 +143,14 @@ function fetchModalWorks() {
           img.src = projectModal.imageUrl;
           img.setAttribute('alt', projectModal.title);
           figcaption.textContent = "éditer";
-          link.href = "#";
-          link.classList.add('trash-can');
+          button.type='button';
+          button.classList.add('trash-can');
           iconContainer.classList.add('fa-stack', 'fa-2x');
           squareIcon.classList.add('fa-solid', 'fa-square', 'fa-stack-2x');
           trashIcon.classList.add('fa-solid', 'fa-trash-can', 'fa-stack-1x');
 
-          secondLink.href = "#";
-          secondLink.classList.add('cross-arrow');
+          secondButton.type = 'button';
+          secondButton.classList.add('cross-arrow');
           secondIconContainer.classList.add('fa-stack', 'fa-2x');
           secondSquareIcon.classList.add('fa-solid', 'fa-square', 'fa-stack-2x');
           secondTrashIcon.classList.add('fa-solid', 'fa-arrows-up-down-left-right', 'fa-stack-1x')
@@ -163,20 +160,20 @@ function fetchModalWorks() {
           secondIconContainer.appendChild(secondSquareIcon);
           secondIconContainer.appendChild(secondTrashIcon);
 
-          link.appendChild(iconContainer);
-          secondLink.appendChild(secondIconContainer);
+          button.appendChild(iconContainer);
+          secondButton.appendChild(secondIconContainer);
 
           figure.appendChild(img);
           figure.appendChild(figcaption);
-          figure.appendChild(link);
-          figure.appendChild(secondLink);
+          figure.appendChild(button);
+          figure.appendChild(secondButton);
 
           galleryModal.appendChild(figure);
 
-          const links = figure.querySelectorAll('a');
-          links.forEach(link => {
-            focusables.push(link);
-          });
+          const buttons = figure.querySelectorAll('button');
+          buttons.forEach(button => {
+            focusables.push(button);
+          });          
         }
       });
 
@@ -254,3 +251,96 @@ window.addEventListener('keydown', function (e) {
     focusInModal(e)
   }
 })
+
+/*
+function deleteFigure(figure) {
+  console.log("deleteFigure called")
+  const id = figure.dataset.id;
+  console.log(id)
+
+  const confirmation = confirm("Voulez-vous vraiment supprimer cette figure ?");
+
+  if (confirmation) {
+    fetch('http://localhost:5678/api/works/${id}', {
+      method: 'DELETE'
+    })
+      .then(response => {
+        console.log(response)
+        if (response.ok) {
+          figure.remove();
+        } else {
+          console.error("Une erreur s'est produite lors de la suppression de la figure.");
+        }
+      })
+      .catch(error => {
+        console.error("Une erreur s'est produite lors de la suppression de la figure:", error);
+      });
+  } else {
+    console.log("Suppression annulée");
+  }
+}
+
+document.querySelectorAll('.trash-can').forEach(button => {
+  button.addEventListener('click', deleteFigure)
+  console.log(document.querySelectorAll('.trash-can'))
+})*/
+
+/*
+const addPictureButton = document.querySelector('.add-picture');
+
+addPictureButton.addEventListener('click', () => {
+  // Votre code pour cacher les éléments et afficher les nouveaux éléments
+});
+
+
+const modalGallery = document.querySelector('.modal-gallery');
+const modalButton = document.querySelector('.modal-button');
+const addModalGallery = document.querySelector('.add-modal-gallery');
+const addModalButton = document.querySelector('.add-modal-button');
+
+addPictureButton.addEventListener('click', () => {
+  modalGallery.style.display = 'none'; // Cacher modal-gallery
+  modalButton.style.display = 'none'; // Cacher modal-buttons
+  addModalGallery.style.display = 'block'; // Afficher add-modal-gallery
+  addModalButton.style.display = 'block'; // Afficher add-modal-button
+});*/
+/*
+const openAddPicture = function (e) {
+  e.preventDefault()
+
+  const addPictureButton = document.querySelector('.add-picture');
+
+addPictureButton.addEventListener('click', () => {
+  modal.querySelector('.return').style.display = 'block'
+  modal.querySelector('.modal-gallery').style.display = 'none'
+  modal.querySelector('.modal-button').style.display = 'none'
+  modal.querySelector('.add-modal-gallery').style.display = 'block'
+  modal.querySelector('.add-modal-button').style.display = 'block'
+
+  modal.style.display = null
+  modal.removeAttribute('aria-hidden')
+  modal.setAttribute('aria-modal', 'true')
+  modal.addEventListener('click', closeModal)
+  modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
+  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+
+});
+}
+
+addPictureButton.addEventListener('click', openAddPicture);*/
+
+
+const addPictureButton = document.querySelector('.add-picture');
+const modalGallery = document.querySelector('.modal-gallery');
+const modalButtons = document.querySelector('.modal-button');
+const addModalGallery = document.querySelector('.add-modal-gallery');
+const addModalButton = document.querySelector('.add-modal-button');
+const returnButton = document.querySelector('.return');
+
+addPictureButton.addEventListener('click', () => {
+  modalGallery.style.display = 'none'; 
+  modalButtons.style.display = 'none'; 
+  addModalGallery.style.display = 'block'; 
+  addModalButton.style.display = 'block'; 
+  returnButton.style.display = 'block'; 
+});
