@@ -128,6 +128,7 @@ function fetchModalWorks() {
       data.forEach(projectModal => {
         if (modal !== null) {
           const figure = document.createElement('figure');
+          figure.dataset.id = projectModal.id;
           const img = document.createElement('img');
           const figcaption = document.createElement('figcaption');
           const button = document.createElement('button');
@@ -173,7 +174,12 @@ function fetchModalWorks() {
           const buttons = figure.querySelectorAll('button');
           buttons.forEach(button => {
             focusables.push(button);
-          });          
+          });
+
+
+          button.addEventListener('click', function() {
+            deleteFigure(figure);
+          });
         }
       });
 
@@ -252,7 +258,6 @@ window.addEventListener('keydown', function (e) {
   }
 })
 
-/*
 function deleteFigure(figure) {
   console.log("deleteFigure called")
   const id = figure.dataset.id;
@@ -261,13 +266,20 @@ function deleteFigure(figure) {
   const confirmation = confirm("Voulez-vous vraiment supprimer cette figure ?");
 
   if (confirmation) {
-    fetch('http://localhost:5678/api/works/${id}', {
-      method: 'DELETE'
-    })
+    const token = localStorage.getItem('token');
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+
+    fetch(`http://localhost:5678/api/works/${id}`, requestOptions)
       .then(response => {
         console.log(response)
         if (response.ok) {
           figure.remove();
+          figure.parentNode.removeChild(figure);
         } else {
           console.error("Une erreur s'est produite lors de la suppression de la figure.");
         }
@@ -280,11 +292,12 @@ function deleteFigure(figure) {
   }
 }
 
+/*
 document.querySelectorAll('.trash-can').forEach(button => {
   button.addEventListener('click', deleteFigure)
   console.log(document.querySelectorAll('.trash-can'))
-})*/
-
+})
+*/
 /*
 const addPictureButton = document.querySelector('.add-picture');
 
@@ -329,7 +342,7 @@ addPictureButton.addEventListener('click', () => {
 
 addPictureButton.addEventListener('click', openAddPicture);*/
 
-
+/*
 const addPictureButton = document.querySelector('.add-picture');
 const modalGallery = document.querySelector('.modal-gallery');
 const modalButtons = document.querySelector('.modal-button');
@@ -343,4 +356,4 @@ addPictureButton.addEventListener('click', () => {
   addModalGallery.style.display = 'block'; 
   addModalButton.style.display = 'block'; 
   returnButton.style.display = 'block'; 
-});
+});*/
