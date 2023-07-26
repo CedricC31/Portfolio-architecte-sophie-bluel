@@ -119,6 +119,7 @@ const focusableSelector = 'button, a, input, textarea'
 let focusables = []
 const galleryModal = document.querySelector('.modal-gallery .gallery-pictures');
 
+
 function fetchModalWorks() {
   fetch('http://localhost:5678/api/works')
     .then(res => res.json())
@@ -175,8 +176,6 @@ function fetchModalWorks() {
           buttons.forEach(button => {
             focusables.push(button);
           });
-
-
           button.addEventListener('click', function() {
             deleteFigure(figure);
           });
@@ -199,7 +198,6 @@ const openModal = function (e) {
 
   modal.querySelector('.return').style.display = 'none'
   modal.querySelector('.add-modal-gallery').style.display = 'none'
-  modal.querySelector('.add-modal-button').style.display = 'none'
 
   modal.style.display = null
   modal.removeAttribute('aria-hidden')
@@ -211,6 +209,25 @@ const openModal = function (e) {
   fetchModalWorks()
 }
 
+const modalGallery = document.querySelector('.modal-gallery');
+const modalButton = document.querySelector('.modal-button');
+const addModalGallery = document.querySelector('.add-modal-gallery');
+const modalReturn = document.querySelector('.return');
+
+document.querySelector('.add-picture').addEventListener('click', () => {
+  modalGallery.style.display = 'none';
+  modalButton.style.display = 'none';
+  addModalGallery.style.display = 'flex';
+  modalReturn.style.display = 'block';
+
+  modalReturn.addEventListener('click', () => {
+    modalGallery.style.display = 'flex';
+    modalButton.style.display = 'flex';
+    addModalGallery.style.display = 'none';
+    modalReturn.style.display = 'none';
+  });
+});
+
 const closeModal = function (e) {
   if (modal === null) return
   e.preventDefault()
@@ -220,6 +237,12 @@ const closeModal = function (e) {
   modal.removeEventListener('click', closeModal)
   modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
   modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
+
+  modal.querySelector('.modal-gallery').style.display = 'flex';
+  modal.querySelector('.modal-button').style.display = 'flex';
+  modal.querySelector('.add-modal-gallery').style.display = 'none';
+  modal.querySelector('.return').style.display = 'none';
+
   modal = null
 }
 
@@ -258,6 +281,9 @@ window.addEventListener('keydown', function (e) {
   }
 })
 
+
+/****code qui fonctionne avec fermeture de la modal */
+
 function deleteFigure(figure) {
   console.log("deleteFigure called")
   const id = figure.dataset.id;
@@ -279,7 +305,6 @@ function deleteFigure(figure) {
         console.log(response)
         if (response.ok) {
           figure.remove();
-          figure.parentNode.removeChild(figure);
         } else {
           console.error("Une erreur s'est produite lors de la suppression de la figure.");
         }
@@ -292,68 +317,86 @@ function deleteFigure(figure) {
   }
 }
 
-/*
-document.querySelectorAll('.trash-can').forEach(button => {
-  button.addEventListener('click', deleteFigure)
-  console.log(document.querySelectorAll('.trash-can'))
-})
-*/
-/*
-const addPictureButton = document.querySelector('.add-picture');
+/***************ajouter une photo */
 
-addPictureButton.addEventListener('click', () => {
-  // Votre code pour cacher les éléments et afficher les nouveaux éléments
+
+const form = document.querySelector('.add-gallery');
+const fileInput = document.querySelector('#add-file-input');
+const titleInput = document.querySelector('#title');
+const categorySelect = document.querySelector('#category-select');
+const addPictureButton = document.querySelector('.add-picture-button');
+const contentPicture = document.querySelector('.content-picture');
+
+const categories = ['Objets', 'Appartements', 'Hotels & restaurants'];
+
+categories.forEach(category => {
+  const option = document.createElement('option');
+  option.value = category.toLowerCase().replace(/\s/g, '-');
+  option.text = category;
+  categorySelect.appendChild(option);
 });
 
-
-const modalGallery = document.querySelector('.modal-gallery');
-const modalButton = document.querySelector('.modal-button');
-const addModalGallery = document.querySelector('.add-modal-gallery');
-const addModalButton = document.querySelector('.add-modal-button');
-
-addPictureButton.addEventListener('click', () => {
-  modalGallery.style.display = 'none'; // Cacher modal-gallery
-  modalButton.style.display = 'none'; // Cacher modal-buttons
-  addModalGallery.style.display = 'block'; // Afficher add-modal-gallery
-  addModalButton.style.display = 'block'; // Afficher add-modal-button
-});*/
-/*
-const openAddPicture = function (e) {
-  e.preventDefault()
-
-  const addPictureButton = document.querySelector('.add-picture');
-
-addPictureButton.addEventListener('click', () => {
-  modal.querySelector('.return').style.display = 'block'
-  modal.querySelector('.modal-gallery').style.display = 'none'
-  modal.querySelector('.modal-button').style.display = 'none'
-  modal.querySelector('.add-modal-gallery').style.display = 'block'
-  modal.querySelector('.add-modal-button').style.display = 'block'
-
-  modal.style.display = null
-  modal.removeAttribute('aria-hidden')
-  modal.setAttribute('aria-modal', 'true')
-  modal.addEventListener('click', closeModal)
-  modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
-
-});
-}
-
-addPictureButton.addEventListener('click', openAddPicture);*/
-
-/*
-const addPictureButton = document.querySelector('.add-picture');
-const modalGallery = document.querySelector('.modal-gallery');
-const modalButtons = document.querySelector('.modal-button');
-const addModalGallery = document.querySelector('.add-modal-gallery');
-const addModalButton = document.querySelector('.add-modal-button');
 const returnButton = document.querySelector('.return');
 
-addPictureButton.addEventListener('click', () => {
-  modalGallery.style.display = 'none'; 
-  modalButtons.style.display = 'none'; 
-  addModalGallery.style.display = 'block'; 
-  addModalButton.style.display = 'block'; 
-  returnButton.style.display = 'block'; 
-});*/
+returnButton.addEventListener('click', () => {
+  form.reset();
+  contentPicture.src = '';
+  contentPicture.style.display = 'none';
+  addPictureButton.style.display = 'block';
+});
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      contentPicture.src = reader.result;
+      contentPicture.style.display = 'block';
+      addPictureButton.style.display = 'none';
+    };
+  } else {
+    contentPicture.style.display = 'none';
+    addPictureButton.style.display = 'block'; 
+  }
+});
+
+form.addEventListener('submit', e => {
+  e.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+
+  // Vérifier si les champs sont correctement remplis
+  if (fileInput.files.length === 0 || titleInput.value.trim() === '' || categorySelect.value === '') {
+    alert('Veuillez remplir tous les champs du formulaire');
+    return;
+  }
+
+  // Créer un objet FormData pour envoyer les données du formulaire
+  const formData = new FormData();
+  formData.append('photo', fileInput.files[0]);
+  formData.append('title', titleInput.value);
+  formData.append('category', categorySelect.value);
+
+  // Envoyer les données du formulaire à l'API
+  const token = localStorage.getItem('token');
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: formData
+  };
+
+  fetch('http://localhost:5678/api/works', requestOptions)
+    .then(response => {
+      if (response.ok) {
+        form.reset();
+      } else {
+        console.error("Une erreur s'est produite lors de l'envoi de la photo.");
+      }
+    })
+    .catch(error => {
+      console.error("Une erreur s'est produite lors de l'envoi de la photo:", error);
+    });
+});
