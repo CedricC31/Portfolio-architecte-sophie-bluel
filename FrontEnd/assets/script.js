@@ -36,7 +36,7 @@ function fetchWorks(category) {
       addClassAdmin();
     })
     .catch(error => {
-      console.error('Une erreur s\'est produite lors de la récupération des projets:', error);
+      console.error("Une erreur s'est produite lors de la récupération des projets:", error);
     });
 }
 
@@ -184,7 +184,7 @@ function fetchModalWorks() {
 
     })
     .catch(error => {
-      console.error('Une erreur s\'est produite lors de la récupération des projets:', error);
+      console.error("Une erreur s'est produite lors de la récupération des projets:", error);
     });
 }
 
@@ -244,6 +244,8 @@ const closeModal = function (e) {
   modal.querySelector('.return').style.display = 'none';
 
   modal = null
+
+  form.reset();
 }
 
 const stopPropagation = function (e) {
@@ -280,7 +282,6 @@ window.addEventListener('keydown', function (e) {
     focusInModal(e)
   }
 })
-
 
 /****code qui fonctionne avec fermeture de la modal */
 
@@ -319,20 +320,23 @@ function deleteFigure(figure) {
 
 /***************ajouter une photo */
 
-
 const form = document.querySelector('.add-gallery');
-const fileInput = document.querySelector('#add-file-input');
-const titleInput = document.querySelector('#title');
-const categorySelect = document.querySelector('#category-select');
+const fileInput = document.getElementById('add-file-input');
+const titleInput = document.getElementById('title');
+const categorySelect = document.getElementById('category-select');
 const addPictureButton = document.querySelector('.add-picture-button');
 const contentPicture = document.querySelector('.content-picture');
 
-const categories = ['Objets', 'Appartements', 'Hotels & restaurants'];
+const categories = [
+  { id: 1, name: 'Objets' },
+  { id: 2, name: 'Appartements' },
+  { id: 3, name: 'Hotels & restaurants' }
+];
 
-categories.forEach(category => {
+categories.forEach((category) => {
   const option = document.createElement('option');
-  option.value = category.toLowerCase().replace(/\s/g, '-');
-  option.text = category;
+  option.value = category.id.toString();
+  option.text = category.name;
   categorySelect.appendChild(option);
 });
 
@@ -363,40 +367,58 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-form.addEventListener('submit', e => {
-  e.preventDefault(); // Empêcher l'envoi du formulaire par défaut
+fileInput.addEventListener('input', checkFormValidity);
+titleInput.addEventListener('input', checkFormValidity);
+categorySelect.addEventListener('input', checkFormValidity);
 
-  // Vérifier si les champs sont correctement remplis
-  if (fileInput.files.length === 0 || titleInput.value.trim() === '' || categorySelect.value === '') {
-    alert('Veuillez remplir tous les champs du formulaire');
+function checkFormValidity() {
+  const isImageSelected = fileInput.files.length > 0;
+  const isTitleFilled = titleInput.value.trim() !== '';
+  const isCategorySelected = categorySelect.value !== '';
+
+  if (isImageSelected && isTitleFilled && isCategorySelected) {
+    document.querySelector('.valid-btn').style.backgroundColor = '#1d6154';
+  } else {
+    document.querySelector('.valid-btn').style.backgroundColor = '';
+  }
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (fileInput.files.length === 0 || titleInput.value === '' || categorySelect.value === '') {
+    alert("Veuillez remplir tous les champs du formulaire");
     return;
   }
 
-  // Créer un objet FormData pour envoyer les données du formulaire
   const formData = new FormData();
-  formData.append('photo', fileInput.files[0]);
+  formData.append('image', fileInput.files[0]);
   formData.append('title', titleInput.value);
   formData.append('category', categorySelect.value);
+  console.log(categorySelect.value);
 
-  // Envoyer les données du formulaire à l'API
   const token = localStorage.getItem('token');
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    body: formData
-  };
+  if (token) {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
 
-  fetch('http://localhost:5678/api/works', requestOptions)
-    .then(response => {
+    try {
+      const response = await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        body: formData,
+        headers: headers
+      });
+
       if (response.ok) {
+        const gallery = await response.json();
+        console.log("Galerie créée avec succès:", gallery);
         form.reset();
       } else {
-        console.error("Une erreur s'est produite lors de l'envoi de la photo.");
+        console.error("Erreur lors de la création de la galerie:", response.status);
       }
-    })
-    .catch(error => {
-      console.error("Une erreur s'est produite lors de l'envoi de la photo:", error);
-    });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la requête:", error);
+    }
+  }
 });
+
