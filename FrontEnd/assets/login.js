@@ -7,13 +7,11 @@ const passwordElt = document.getElementById('password');
 
 // ********* FONCTIONS *********
 function login(event) {
-  event.preventDefault();  // Empêche l'envoi du formulaire par défaut
+  event.preventDefault();
 
-  // Récupérer les valeurs des champs email et password
   const email = emailElt.value;
   const password = passwordElt.value;
 
-  // Construire les données à envoyer dans la requête POST
   const data = {
     email: email,
     password: password
@@ -27,31 +25,19 @@ function login(event) {
     .then(response => response.json())
     .then(data => {
       if (data.userId && data.token) {
-        // Récupérer le token de la réponse
         const token = data.token;
         const userId = data.userId;
 
-        // Stocker le token et userId dans le localStorage ou dans un cookie
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
 
-        // Rediriger vers la page d'accueil
         window.location.href = 'index.html';
-
-        console.log(userId);
-        console.log(token);
       } else {
-        // Afficher un message d'erreur de connexion
-        console.error('Échec de la connexion:', data.error);
-        alert('Erreur dans l\'identifiant ou le mot de passe.');
+        alert("Erreur dans l'identifiant ou le mot de passe.");
       }
-
-      console.log(data);  // Afficher la réponse dans la console
-
     })
     .catch(error => {
-      // Gérer les erreurs de la requête
-      console.error('Une erreur s\'est produite lors de la requête:', error);
+      console.error("Une erreur s'est produite lors de la requête:", error);
     });
 }
 
