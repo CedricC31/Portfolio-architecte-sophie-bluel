@@ -37,21 +37,13 @@ function login(event) {
 
         // Rediriger vers la page d'accueil
         window.location.href = 'index.html';
-
-        console.log(userId);
-        console.log(token);
       } else {
-        // Afficher un message d'erreur de connexion
-        console.error('Échec de la connexion:', data.error);
-        alert('Erreur dans l\'identifiant ou le mot de passe.');
+        alert("Erreur dans l'identifiant ou le mot de passe.");
       }
-
-      console.log(data);  // Afficher la réponse dans la console
-
     })
     .catch(error => {
       // Gérer les erreurs de la requête
-      console.error('Une erreur s\'est produite lors de la requête:', error);
+      console.error("Une erreur s'est produite lors de la requête:", error);
     });
 }
 

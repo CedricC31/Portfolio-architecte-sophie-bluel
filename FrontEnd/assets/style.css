@@ -351,7 +351,6 @@ header li a {
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: 1em;
-
 }
 
 .filter.active {
@@ -383,11 +382,28 @@ header li a {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+  animation: opacity 1s ease-in;
+}
+
+.gallery figure{
+  opacity: 1;
+  animation: opacity 0.7s ease-in-out;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .gallery img {
 	width: 100%;
-
 }
 
 #contact {
@@ -397,7 +413,6 @@ header li a {
 
 #contact>* {
 	text-align: center;
-
 }
 
 #contact h2 {
@@ -458,18 +473,37 @@ input[type="submit"] {
   position: relative;
   top: 30px;
   width: 630px;
-  height: 730px;
   max-width: calc(100vw - 55%);
   max-height: calc(100vh - 24%);
   background: white;
   border-radius: 10px;
   padding: 26px 30px 48px 30px;
+  animation: transform 1s ease-in-out;
+}
+
+@keyframes transform {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.closing {
+  animation: transform-reverse 0.6s ease-in-out;
+}
+
+@keyframes transform-reverse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }
 
 .modal-navbar {
-  /*display: flex;
-  align-items: center;
-  height: 24px;*/
   display: unset;
   position: relative;
   margin: 0;
@@ -503,6 +537,7 @@ input[type="submit"] {
   flex-grow: 1;
   width: 76%;
   margin: auto;
+  overflow: hidden;
 }
 
 .modal-editor h2 {
@@ -519,8 +554,28 @@ input[type="submit"] {
   align-items: center;
   gap: 2em;
   flex-grow: 1;
-  margin: 34px 0 0 0;
+  margin: 30px 0 0 0;
   width: 100%;
+}
+
+.modal-gallery {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #1D6154 #A7A7A7;
+}
+
+.modal-gallery::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-gallery::-webkit-scrollbar-track {
+  background-color: #A7A7A7;
+  border-radius: 100px;
+}
+
+.modal-gallery::-webkit-scrollbar-thumb {
+  background-color: #1D6154;
+  border-radius: 100px;
 }
 
 .gallery-pictures {
@@ -639,7 +694,6 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 22px;
 }
 
 .add-picture-box {
@@ -802,6 +856,22 @@ footer nav ul {
   font-size: 1.2em;
   text-indent: 12px;
   padding: 0;
+}
+
+.login input[type="email"]:invalid{
+  background-color: darkred;
+  color: white;
+  animation: headshake 100ms cubic-bezier(.4,.1,.6,.9);
+  animation-iteration-count: 3;
+}
+
+@keyframes headshake {
+  25% {
+    transform: translateX(2%);
+  }
+  75% {
+    transform: translateX(2% * -1);
+  }
 }
 
 .btn-login {

@@ -8,14 +8,13 @@ const adminElements = document.querySelectorAll('.admin');
 
 // ********* FONCTIONS *********
 
-/**
- * Récupère les travaux à partir de l'API spécifiée et les ajoute à la galerie.
- */
+/******Récupère les travaux à partir de l'API spécifiée et les ajoute à la galerie.*********/
+
 function fetchWorks(category) {
   fetch('http://localhost:5678/api/works')
     .then(res => res.json())
     .then(data => {
-      galleryElt.innerHTML = ''; // Efface le contenu précédent de la galerie
+      galleryElt.innerHTML = '';
 
       data.forEach(project => {
         if (category === 'all' || category === project.category.name.toLowerCase() || !category) {
@@ -68,8 +67,8 @@ function logout() {
   }
 
   removeClassAdmin();
-  // Rediriger vers la page d'accueil ou une autre page
-  window.location.href = 'index.html';
+
+  window.location.reload();
 }
 
 // ********* MAIN *********
@@ -91,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   fetchWorks();
 });
+
+/*******Ajoute la classe "admin" aux éléments spécifiés si l'utilisateur est connecté.********/
 function addClassAdmin() {
   // Vérifier si l'utilisateur est connecté avant d'ajouter la classe "admin"
   const token = localStorage.getItem('token');
@@ -113,13 +114,14 @@ function removeClassAdmin() {
   });
 }
 
-/****** */
+/******Modal*********/
+
 let modal = null
-const focusableSelector = 'button, a, input, textarea'
-let focusables = []
+const focusableSelector = 'button, a, input, textarea';
+let focusables = [];
 const galleryModal = document.querySelector('.modal-gallery .gallery-pictures');
 
-
+/**********Récupère les travaux de la modal depuis l'API et remplit la galerie modale avec les données récupérées.*********/
 function fetchModalWorks() {
   fetch('http://localhost:5678/api/works')
     .then(res => res.json())
@@ -186,41 +188,45 @@ function fetchModalWorks() {
     .catch(error => {
       console.error("Une erreur s'est produite lors de la récupération des projets:", error);
     });
-}
+};
 
-/********* */
+/*********Ouvre une fenêtre modale lorsque déclenchée par un événement.*********/
 const openModal = function (e) {
-  e.preventDefault()
+  e.preventDefault();
 
-  modal = document.querySelector(e.target.getAttribute('href'))
-  focusables = Array.from(modal.querySelectorAll(focusableSelector))
-  focusables[0].focus()
+  modal = document.querySelector(e.target.getAttribute('href'));
+  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+  focusables[0].focus();
 
-  modal.querySelector('.return').style.display = 'none'
-  modal.querySelector('.add-modal-gallery').style.display = 'none'
+  modal.querySelector('.return').style.display = 'none';
+  modal.querySelector('.add-modal-gallery').style.display = 'none';
 
-  modal.style.display = null
-  modal.removeAttribute('aria-hidden')
-  modal.setAttribute('aria-modal', 'true')
-  modal.addEventListener('click', closeModal)
-  modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+  modal.style.display = null;
+  modal.removeAttribute('aria-hidden');
+  modal.setAttribute('aria-modal', 'true');
+  modal.addEventListener('click', closeModal);
+  modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
 
-  fetchModalWorks()
-}
+  fetchModalWorks();
+};
 
+const modalEditor = document.querySelector('.modal-editor');
 const modalGallery = document.querySelector('.modal-gallery');
 const modalButton = document.querySelector('.modal-button');
 const addModalGallery = document.querySelector('.add-modal-gallery');
 const modalReturn = document.querySelector('.return');
 
 document.querySelector('.add-picture').addEventListener('click', () => {
+  modalEditor.style.overflow = 'inherit';
   modalGallery.style.display = 'none';
   modalButton.style.display = 'none';
   addModalGallery.style.display = 'flex';
   modalReturn.style.display = 'block';
+  form.reset();
 
   modalReturn.addEventListener('click', () => {
+    modalEditor.style.overflow = 'hidden';
     modalGallery.style.display = 'flex';
     modalButton.style.display = 'flex';
     addModalGallery.style.display = 'none';
@@ -228,34 +234,47 @@ document.querySelector('.add-picture').addEventListener('click', () => {
   });
 });
 
+/*********Ferme la fenêtre modale.**********/
 const closeModal = function (e) {
-  if (modal === null) return
-  e.preventDefault()
-  modal.style.display = "none"
-  modal.setAttribute('aria-hidden', 'true')
-  modal.removeAttribute('aria-modal')
-  modal.removeEventListener('click', closeModal)
-  modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
-  modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
+  if (modal === null) return;
+  e.preventDefault();
 
-  modal.querySelector('.modal-gallery').style.display = 'flex';
-  modal.querySelector('.modal-button').style.display = 'flex';
-  modal.querySelector('.add-modal-gallery').style.display = 'none';
-  modal.querySelector('.return').style.display = 'none';
+  modal.querySelector('.modal-wrapper').classList.add('closing');
 
-  modal = null
+  setTimeout(function () {
+    modal.querySelector('.modal-wrapper').classList.remove('closing');
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    modal.removeEventListener('click', closeModal);
+    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
 
-  form.reset();
+    modal.querySelector('.modal-gallery').style.display = 'flex';
+    modal.querySelector('.modal-button').style.display = 'flex';
+    modal.querySelector('.add-modal-gallery').style.display = 'none';
+    modal.querySelector('.return').style.display = 'none';
+
+    modal = null;
+
+    form.reset();
+    contentPicture.src = '';
+    contentPicture.style.display = 'none';
+    addPictureButton.style.display = 'block';
+  }, 500);
 }
 
 const stopPropagation = function (e) {
-  e.stopPropagation()
-}
+  e.stopPropagation();
+};
 
+/********Met l'accent sur l'élément pouvant être focalisé suivant ou précédent dans une fenêtre modale.*********/
 const focusInModal = function (e) {
-  e.preventDefault()
-  let visibleFocusables = focusables.filter(f => getComputedStyle(f).display !== 'none')
-  let index = visibleFocusables.findIndex(f => f === modal.querySelector(':focus'))
+  e.preventDefault();
+  
+  let visibleFocusables = focusables.filter(f => getComputedStyle(f).display !== 'none');
+  let index = visibleFocusables.findIndex(f => f === modal.querySelector(':focus'));
+  
   if (e.shiftKey === true) {
     index--
   } else {
@@ -267,30 +286,27 @@ const focusInModal = function (e) {
   if (index < 0) {
     index = visibleFocusables.length - 1
   }
-  visibleFocusables[index].focus()
+  visibleFocusables[index].focus();
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
-  a.addEventListener('click', openModal)
+  a.addEventListener('click', openModal);
 })
 
 window.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' || e.key === 'Esc') {
-    closeModal(e)
+    closeModal(e);
   }
   if (e.key === 'Tab' && modal !== null) {
-    focusInModal(e)
+    focusInModal(e);
   }
-})
+});
 
-/****code qui fonctionne avec fermeture de la modal */
-
+/**********Supprime le projet de la base de données.*********/
 function deleteFigure(figure) {
-  console.log("deleteFigure called")
   const id = figure.dataset.id;
-  console.log(id)
 
-  const confirmation = confirm("Voulez-vous vraiment supprimer cette figure ?");
+  const confirmation = confirm("Voulez-vous vraiment supprimer ce projet ?");
 
   if (confirmation) {
     const token = localStorage.getItem('token');
@@ -303,22 +319,17 @@ function deleteFigure(figure) {
 
     fetch(`http://localhost:5678/api/works/${id}`, requestOptions)
       .then(response => {
-        console.log(response)
         if (response.ok) {
           figure.remove();
-        } else {
-          console.error("Une erreur s'est produite lors de la suppression de la figure.");
         }
       })
       .catch(error => {
-        console.error("Une erreur s'est produite lors de la suppression de la figure:", error);
+        console.error("Une erreur s'est produite lors de la suppression du projet :", error);
       });
-  } else {
-    console.log("Suppression annulée");
-  }
-}
+  } 
+};
 
-/***************ajouter une photo */
+/*************Ajouter un projet*********/
 
 const form = document.querySelector('.add-gallery');
 const fileInput = document.getElementById('add-file-input');
@@ -381,13 +392,17 @@ function checkFormValidity() {
   } else {
     document.querySelector('.valid-btn').style.backgroundColor = '';
   }
-}
+};
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  if (fileInput.files.length === 0 || titleInput.value === '' || categorySelect.value === '') {
-    alert("Veuillez remplir tous les champs du formulaire");
+  if (!fileInput.files[0]) {
+    alert("Veuillez fournir une image");
+    return;
+
+  } else if (titleInput.value === '') {
+    alert("Veuillez saisir un titre");
     return;
   }
 
@@ -395,7 +410,6 @@ form.addEventListener('submit', async (e) => {
   formData.append('image', fileInput.files[0]);
   formData.append('title', titleInput.value);
   formData.append('category', categorySelect.value);
-  console.log(categorySelect.value);
 
   const token = localStorage.getItem('token');
   if (token) {
@@ -410,15 +424,13 @@ form.addEventListener('submit', async (e) => {
       });
 
       if (response.ok) {
-        const gallery = await response.json();
-        console.log("Galerie créée avec succès:", gallery);
+        await response.json();
         form.reset();
       } else {
-        console.error("Erreur lors de la création de la galerie:", response.status);
+        alert("Erreur lors de la création de la galerie:", response.status);
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi de la requête:", error);
     }
   }
 });
-

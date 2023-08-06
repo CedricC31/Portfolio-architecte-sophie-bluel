@@ -94,24 +94,23 @@
 				</section>
 				<section class="add-modal-gallery">
 					<h2 id="title-modal2">Ajout photo</h2>
-					<form class="add-gallery" enctype="multipart/form-data">
+					<form class="add-gallery">
 						<div class="add-picture-box">
 							<div class="add-picture-box">
 								<i class="fa-regular fa-image"></i>
 								<div class="add-picture-button">
 									<label for="add-file-input" class="add-file-btn">+ Ajouter photo</label>
-									<input name="add-file-input" id="add-file-input" class="add-file-input" type="file" accept="image/jpeg, image/png"
-										required>
+									<input name="add-file-input" id="add-file-input" class="add-file-input" type="file" accept="image/jpeg, image/png">
 								</div>
 								<p>jpg, png : 4mo max</p>
 								<img id="contentPicture" class="content-picture" src="#" alt="" style="display:none;">
 							</div>
 						</div>
 						<label for="title">Titre</label>
-						<input type="text" name="title" id="title" required>
+						<input type="text" name="title" id="title">
 						<label for="category-select">Catégorie</label>
-						<select class="select" name="categories" id="category-select" required>
-							<option value="" label=" " selected disabled hidden></option>
+						<select class="select" name="categories" id="category-select">
+							<option value="2" selected disabled hidden>Appartements</option>
 						</select>
 						<div class="content-valid-btn">
 							<button class="valid-btn">Valider</button>
