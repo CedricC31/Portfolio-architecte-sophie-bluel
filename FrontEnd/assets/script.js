@@ -55,14 +55,12 @@ filterButtonsElt.forEach(button => {
  * Redirige vers la page d'accueil ou une autre page spécifiée.
  */
 function logout() {
-  // Supprimer le token et userId du localStorage ou d'un cookie
   localStorage.removeItem('token');
   localStorage.removeItem('userId');
 
   const galleryFilters = document.querySelector('.gallery-filters');
 
   if (galleryFilters) {
-    // Ajouter la classe "hidden" à la div avec la classe "gallery-filters"
     galleryFilters.classList.add('hidden');
   }
 
@@ -79,11 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const logoutLi = document.getElementById('logout-li');
 
   if (token && userId) {
-    // Utilisateur connecté, afficher "logout" et ajouter la classe "admin" aux éléments nécessaires
     logoutLi.innerHTML = '<a href="#" onclick="logout()">logout</a>';
     addClassAdmin();
   } else {
-    // Utilisateur non connecté, afficher "login" et supprimer la classe "admin" des éléments
     logoutLi.innerHTML = '<a href="login.html">login</a>';
     removeClassAdmin();
   }
@@ -93,31 +89,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /*******Ajoute la classe "admin" aux éléments spécifiés si l'utilisateur est connecté.********/
 function addClassAdmin() {
-  // Vérifier si l'utilisateur est connecté avant d'ajouter la classe "admin"
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
   if (token && userId) {
     adminElements.forEach(element => {
-      element.classList.remove('admin'); // Supprimer la classe "admin"
+      element.classList.remove('admin');
     });
 
     const galleryFilters = document.querySelector('.gallery-filters');
     if (galleryFilters) {
-      // Ajouter la classe "hidden" à la div avec la classe "gallery-filters"
       galleryFilters.classList.add('hidden');
     }
   }
 }
 function removeClassAdmin() {
   adminElements.forEach(element => {
-    element.classList.add('admin'); // Ajouter la classe "admin"
+    element.classList.add('admin');
   });
 }
 
 /******Modal*********/
 
 let modal = null
-const focusableSelector = 'button, a, input, textarea';
+const focusableSelector = 'button, a, input, textarea, select';
 let focusables = [];
 const galleryModal = document.querySelector('.modal-gallery .gallery-pictures');
 
@@ -225,6 +219,9 @@ document.querySelector('.add-picture').addEventListener('click', () => {
   modalReturn.style.display = 'block';
   form.reset();
 
+  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+  focusables[0].focus();
+
   modalReturn.addEventListener('click', () => {
     modalEditor.style.overflow = 'hidden';
     modalGallery.style.display = 'flex';
@@ -254,6 +251,7 @@ const closeModal = function (e) {
     modal.querySelector('.modal-button').style.display = 'flex';
     modal.querySelector('.add-modal-gallery').style.display = 'none';
     modal.querySelector('.return').style.display = 'none';
+    modalEditor.style.overflow = 'hidden';
 
     modal = null;
 
