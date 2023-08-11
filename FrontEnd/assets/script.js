@@ -319,6 +319,7 @@ function deleteFigure(figure) {
       .then(response => {
         if (response.ok) {
           figure.remove();
+          fetchWorks();
         }
       })
       .catch(error => {
@@ -356,6 +357,8 @@ returnButton.addEventListener('click', () => {
   contentPicture.src = '';
   contentPicture.style.display = 'none';
   addPictureButton.style.display = 'block';
+
+  fetchModalWorks();
 });
 
 fileInput.addEventListener('change', () => {
@@ -423,7 +426,20 @@ form.addEventListener('submit', async (e) => {
 
       if (response.ok) {
         await response.json();
+        fetchWorks();
         form.reset();
+        contentPicture.src = '';
+        contentPicture.style.display = 'none';
+        addPictureButton.style.display = 'block';
+        checkFormValidity();
+
+        modalEditor.style.overflow = 'hidden';
+        modalGallery.style.display = 'flex';
+        modalButton.style.display = 'flex';
+        addModalGallery.style.display = 'none';
+        modalReturn.style.display = 'none';
+
+        fetchModalWorks();
       } else {
         alert("Erreur lors de la création de la galerie:", response.status);
       }
